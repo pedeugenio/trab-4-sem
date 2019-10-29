@@ -25,40 +25,53 @@ public class Executavel {
         AlunoRepositorio alunoRepositorio
                 = new AlunoRepositorio();
         
-        Aluno aluno = new Aluno();
-        aluno.setCodigo(2);
-        aluno.setNome("Antonio");
+        Aluno aluno = alunoRepositorio.buscarPorId(2);
         
-        Responsavel responsavel = new Responsavel();
-        responsavel.setNome("Pedro José");
-        responsavel.setCpf("22233311109");
-        responsavel.setTipo(TipoResponsavel.PAI);
+        System.out.println("nome: "+aluno.getNome());
+        System.out.println("responsavel: "+aluno.
+                    getResponsavel().getNome());
         
-        aluno.setResponsavel(responsavel);
+        aluno.getCursos().forEach((a) -> {
+            System.out.println("Curso: " + a.getNome());
+            System.out.println("Carga Horaria: " + a.getCargaHoraria());
+        });
         
-        List<Curso> cursos = new ArrayList<>();
         
-        Curso curso = new Curso();
-        curso.setNome("Java Basico");
-        curso.setCargaHoraria(40);
-        curso.setAno(2017);           
-        cursos.add(curso);
+//        
+//        Aluno aluno = new Aluno();
+//        aluno.setCodigo(2);
+//        aluno.setNome("Antonio");
+//        
+//        Responsavel responsavel = new Responsavel();
+//        responsavel.setNome("Pedro José");
+//        responsavel.setCpf("22233311109");
+//        responsavel.setTipo(TipoResponsavel.PAI);
+//        
+//        aluno.setResponsavel(responsavel);
+//        
+//        List<Curso> cursos = new ArrayList<>();
+//        
+//        Curso curso = new Curso();
+//        curso.setNome("Java Basico");
+//        curso.setCargaHoraria(40);
+//        curso.setAno(2017);           
+//        cursos.add(curso);
+//        
+//        curso = new Curso();
+//        curso.setNome("Java Intermediario");
+//        curso.setCargaHoraria(60);
+//        curso.setAno(2018);        
+//        cursos.add(curso);
+//        
+//        curso = new Curso();
+//        curso.setNome("Java Avançado");
+//        curso.setCargaHoraria(100);
+//        curso.setAno(2019);        
+//        cursos.add(curso);
+//        
+//        aluno.setCursos(cursos);
         
-        curso = new Curso();
-        curso.setNome("Java Intermediario");
-        curso.setCargaHoraria(60);
-        curso.setAno(2018);        
-        cursos.add(curso);
-        
-        curso = new Curso();
-        curso.setNome("Java Avançado");
-        curso.setCargaHoraria(100);
-        curso.setAno(2019);        
-        cursos.add(curso);
-        
-        aluno.setCursos(cursos);
-        
-        alunoRepositorio.salvar(aluno);
+ //       alunoRepositorio.salvar(aluno);
         FabricaConexao.fechar();
     }
 

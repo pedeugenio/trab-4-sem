@@ -58,7 +58,8 @@ public class AlunoRepositorio {
     }
 
     public Aluno buscarPorId(Integer id) {
-        return null;
+        EntityManager gerenciador = FabricaConexao.obterGerenciador();
+        return gerenciador.find(Aluno.class, id);
     }
 
 }
