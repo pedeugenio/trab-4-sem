@@ -5,11 +5,12 @@
  */
 package edu.fjn.primeiro.orm.modelo;
 
+import java.util.List;
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 /**
@@ -27,6 +28,20 @@ public class Aluno {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn
     private Responsavel responsavel;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Curso> cursos;
+
+    public Aluno() {
+    }
+
+    public List<Curso> getCursos() {
+        return cursos;
+    }
+
+    public void setCursos(List<Curso> cursos) {
+        this.cursos = cursos;
+    }
 
     public Integer getCodigo() {
         return codigo;

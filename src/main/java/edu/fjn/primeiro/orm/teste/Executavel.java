@@ -6,10 +6,13 @@
 package edu.fjn.primeiro.orm.teste;
 
 import edu.fjn.primeiro.orm.modelo.Aluno;
+import edu.fjn.primeiro.orm.modelo.Curso;
 import edu.fjn.primeiro.orm.modelo.Responsavel;
 import edu.fjn.primeiro.orm.modelo.TipoResponsavel;
 import edu.fjn.primeiro.orm.repositorio.AlunoRepositorio;
 import edu.fjn.primeiro.orm.repositorio.util.FabricaConexao;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -23,15 +26,37 @@ public class Executavel {
                 = new AlunoRepositorio();
         
         Aluno aluno = new Aluno();
-        aluno.setCodigo(1);
-        aluno.setNome("Paulo");
+        aluno.setCodigo(2);
+        aluno.setNome("Antonio");
         
         Responsavel responsavel = new Responsavel();
-        responsavel.setNome("Mariana");
-        responsavel.setCpf("11122233310");
-        responsavel.setTipo(TipoResponsavel.MAE);
+        responsavel.setNome("Pedro José");
+        responsavel.setCpf("22233311109");
+        responsavel.setTipo(TipoResponsavel.PAI);
         
         aluno.setResponsavel(responsavel);
+        
+        List<Curso> cursos = new ArrayList<>();
+        
+        Curso curso = new Curso();
+        curso.setNome("Java Basico");
+        curso.setCargaHoraria(40);
+        curso.setAno(2017);           
+        cursos.add(curso);
+        
+        curso = new Curso();
+        curso.setNome("Java Intermediario");
+        curso.setCargaHoraria(60);
+        curso.setAno(2018);        
+        cursos.add(curso);
+        
+        curso = new Curso();
+        curso.setNome("Java Avançado");
+        curso.setCargaHoraria(100);
+        curso.setAno(2019);        
+        cursos.add(curso);
+        
+        aluno.setCursos(cursos);
         
         alunoRepositorio.salvar(aluno);
         FabricaConexao.fechar();
