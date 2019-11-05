@@ -5,73 +5,64 @@
  */
 package edu.fjn.primeiro.orm.teste;
 
-import edu.fjn.primeiro.orm.modelo.Aluno;
-import edu.fjn.primeiro.orm.modelo.Curso;
-import edu.fjn.primeiro.orm.modelo.Responsavel;
-import edu.fjn.primeiro.orm.modelo.TipoResponsavel;
+import edu.fjn.primeiro.orm.modelo.aluno.Curso;
 import edu.fjn.primeiro.orm.repositorio.AlunoRepositorio;
+import edu.fjn.primeiro.orm.repositorio.AvaliacaoRepositorio;
+import edu.fjn.primeiro.orm.repositorio.DisciplinaRepositorio;
 import edu.fjn.primeiro.orm.repositorio.util.FabricaConexao;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
- * @author franc
  */
 public class Executavel {
 
     public static void main(String[] arg) {
-
         AlunoRepositorio alunoRepositorio
                 = new AlunoRepositorio();
-        
-        Aluno aluno = alunoRepositorio.buscarPorId(2);
-        
-        System.out.println("nome: "+aluno.getNome());
-        System.out.println("responsavel: "+aluno.
-                    getResponsavel().getNome());
-        
-        aluno.getCursos().forEach((a) -> {
-            System.out.println("Curso: " + a.getNome());
-            System.out.println("Carga Horaria: " + a.getCargaHoraria());
+        DisciplinaRepositorio disciplinaRepositorio
+                = new DisciplinaRepositorio();
+        AvaliacaoRepositorio avaliacaoRepositorio
+                = new AvaliacaoRepositorio();
+
+        disciplinaRepositorio.listar().forEach((d) -> {
+            System.out.println(d.getNome());
         });
-        
-        
-//        
-//        Aluno aluno = new Aluno();
-//        aluno.setCodigo(2);
-//        aluno.setNome("Antonio");
-//        
-//        Responsavel responsavel = new Responsavel();
-//        responsavel.setNome("Pedro José");
-//        responsavel.setCpf("22233311109");
-//        responsavel.setTipo(TipoResponsavel.PAI);
-//        
-//        aluno.setResponsavel(responsavel);
-//        
-//        List<Curso> cursos = new ArrayList<>();
-//        
-//        Curso curso = new Curso();
-//        curso.setNome("Java Basico");
-//        curso.setCargaHoraria(40);
-//        curso.setAno(2017);           
-//        cursos.add(curso);
-//        
-//        curso = new Curso();
-//        curso.setNome("Java Intermediario");
-//        curso.setCargaHoraria(60);
-//        curso.setAno(2018);        
-//        cursos.add(curso);
-//        
-//        curso = new Curso();
-//        curso.setNome("Java Avançado");
-//        curso.setCargaHoraria(100);
-//        curso.setAno(2019);        
-//        cursos.add(curso);
-//        
-//        aluno.setCursos(cursos);
-        
- //       alunoRepositorio.salvar(aluno);
+
+        alunoRepositorio.listar().
+                forEach((a)
+                        -> System.out.println("Aluno:" + a.getNome()));
+
+        alunoRepositorio.buscarPorNome("ANTONIO")
+                .forEach((a)
+                        -> System.out.println("Aluno Buscado: " + a.getNome()));
+
+        alunoRepositorio.buscarPorParteNome("a")
+                .forEach((a) -> {
+                    System.out.println("Aluno c/ ilike: " + a.getNome());
+                    for (Curso curso : a.getCursos()) {
+                        System.out.println("- " + curso.getNome());
+                    }
+                });
+
+        alunoRepositorio.buscarPorNomeJPQL("ANTONIO")
+                .forEach((a)
+                        -> System.out.println("Aluno c/ JPQL: " + a.getNome()));
+
+        /*
+        Aluno aluno = alunoRepositorio.buscarPorId(2);
+        Disciplina disciplina = disciplinaRepositorio
+                .buscarPorId("a99ea4ca-95fa-4070-ab79-3b4ec85e84c1");
+
+        System.out.println("Aluno: " + aluno.getNome());
+        System.out.println("Disciplina: " + disciplina.getNome());
+
+        Avaliacao avaliacao = new Avaliacao();
+        avaliacao.setAluno(aluno);
+        avaliacao.setDisciplina(disciplina);
+        avaliacao.setNota(9.0);
+
+        avaliacaoRepositorio.salvar(avaliacao);
+         */
         FabricaConexao.fechar();
     }
 

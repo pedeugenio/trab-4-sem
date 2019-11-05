@@ -5,8 +5,9 @@
  */
 package edu.fjn.primeiro.orm.repositorio;
 
-import edu.fjn.primeiro.orm.modelo.Disciplina;
+import edu.fjn.primeiro.orm.modelo.disciplina.Disciplina;
 import edu.fjn.primeiro.orm.repositorio.util.FabricaConexao;
+import java.util.List;
 import javax.persistence.EntityManager;
 
 /**
@@ -51,6 +52,18 @@ public class DisciplinaRepositorio {
         } finally {
             gerenciador.close();
         }
+    }
+
+    public Disciplina buscarPorId(String codigo) {
+        return FabricaConexao.obterGerenciador()
+                .find(Disciplina.class, codigo);
+    }
+
+    public List<Disciplina> listar() {
+        return FabricaConexao.obterGerenciador()
+                .createQuery("from Disciplina d",
+                        Disciplina.class)
+                .getResultList();
     }
 
 }
