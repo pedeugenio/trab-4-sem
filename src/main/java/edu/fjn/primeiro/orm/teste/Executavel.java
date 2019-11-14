@@ -5,6 +5,7 @@
  */
 package edu.fjn.primeiro.orm.teste;
 
+import edu.fjn.primeiro.orm.modelo.aluno.Aluno;
 import edu.fjn.primeiro.orm.modelo.aluno.Curso;
 import edu.fjn.primeiro.orm.repositorio.AlunoRepositorio;
 import edu.fjn.primeiro.orm.repositorio.AvaliacaoRepositorio;
@@ -24,6 +25,32 @@ public class Executavel {
         AvaliacaoRepositorio avaliacaoRepositorio
                 = new AvaliacaoRepositorio();
 
+        alunoRepositorio.listar().
+                forEach((a)
+                        -> {
+                    System.out.println("ID:" + a.getCodigo());
+                    System.out.println("Aluno:" + a.getNome());
+                    System.out.println("Usuario:" + a.getNomeDeUsuario());
+                    System.out.println("Senha:" + a.getSenha());
+                });
+
+        Aluno a = alunoRepositorio.
+                buscarPorNomeDeUsuarioSenha("paulo", "123456");
+
+        if (a != null) {
+            System.out.println(a.getNome() + " realizou login!");
+        } else {
+            System.out.println("Acesso não autorizado!");
+
+        }
+
+//        
+//        Aluno aluno = alunoRepositorio.buscarPorId(1);
+//        aluno.setNomeDeUsuario("paulo");
+//        aluno.setSenha("123456");
+//        
+//        alunoRepositorio.atualizar(aluno);
+        /*
         disciplinaRepositorio.listar().forEach((d) -> {
             System.out.println(d.getNome());
         });
@@ -48,7 +75,7 @@ public class Executavel {
                 .forEach((a)
                         -> System.out.println("Aluno c/ JPQL: " + a.getNome()));
 
-        /*
+        
         Aluno aluno = alunoRepositorio.buscarPorId(2);
         Disciplina disciplina = disciplinaRepositorio
                 .buscarPorId("a99ea4ca-95fa-4070-ab79-3b4ec85e84c1");

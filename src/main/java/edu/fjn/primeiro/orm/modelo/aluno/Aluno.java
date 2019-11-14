@@ -7,6 +7,7 @@ package edu.fjn.primeiro.orm.modelo.aluno;
 
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -25,6 +26,11 @@ public class Aluno {
     private Integer codigo;
 
     private String nome;
+
+    @Column(unique = true)
+    private String nomeDeUsuario;
+
+    private String senha;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn
@@ -68,6 +74,22 @@ public class Aluno {
 
     public void setResponsavel(Responsavel responsavel) {
         this.responsavel = responsavel;
+    }
+
+    public String getNomeDeUsuario() {
+        return nomeDeUsuario;
+    }
+
+    public void setNomeDeUsuario(String nomeDeUsuario) {
+        this.nomeDeUsuario = nomeDeUsuario;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
 }

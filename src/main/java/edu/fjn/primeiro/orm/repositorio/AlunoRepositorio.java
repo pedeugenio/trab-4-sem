@@ -9,6 +9,7 @@ import edu.fjn.primeiro.orm.modelo.aluno.Aluno;
 import edu.fjn.primeiro.orm.repositorio.util.FabricaConexao;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.MatchMode;
@@ -66,9 +67,28 @@ public class AlunoRepositorio {
         EntityManager em = FabricaConexao.obterGerenciador();
         Session session = (Session) em.getDelegate();
         Criteria criteria = session.createCriteria(Aluno.class);
-        List<Aluno> alunos = criteria.list();
+        List<Aluno> alunos = criteria.
+                setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+                .list();
         em.close();
         return alunos;
+    }
+
+    public Aluno buscarPorNomeDeUsuarioSenha(String usuario, String senha) {
+        EntityManager gerenciador = FabricaConexao.obterGerenciador();
+        Aluno a = null;
+        try {
+            a = gerenciador.createQuery(
+                    "select a from Aluno a where a.nomeDeUsuario = :usuario "
+                    + "AND a.senha = :senha", Aluno.class)
+                    .setParameter("usuario", usuario)
+                    .setParameter("senha", senha)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            a = null;
+        }
+        gerenciador.close();
+        return a;
     }
 
     public Aluno buscarPorId(Integer id) {
